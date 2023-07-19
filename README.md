@@ -51,10 +51,16 @@ sortie le nombre de jour de travail (1 journée = 7 heures)
 
 ### Liste fonctionnelle
 
-Listez de manière exhaustive les fonctionnalités à développer (administration et API)
-Recettage
-Faites un tableau avec comme entrée la liste fonctionnelle, et comme sortie si la fonctionnalité
-est opérationnelle ou non opérationnelle (ou possède un bug, une limitation ...)
+| **Feature**                                        | **Temps estimé** | **statut** |
+| -------------------------------------------------- | ---------------- | ---------- |
+| Rédaction du cahier des charges                    | 1 / 2 journée    | 🟡         |
+| Création du diagramme de base de données           | 1h               | 🟢         |
+| Création des maquettes                             | 1 / 2 journée    | 🔴         |
+| Mise en place du projet                            | 2h               | 🟢         |
+| Création des migrations et seeders (API)           | 1 / 2 journée    | 🔴         |
+| Création des routes API et MEP de la documentation | 1 journée        | 🔴         |
+| Création du systeme d'authentification             | 1 / 2 journée    | 🔴         |
+| Création de l'interface d'administration           | 1 journée        | 🔴         |
 
 ### Diagramme de la base de données
 

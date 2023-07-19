@@ -1,8 +1,8 @@
 ![banner](./docs/media/banner.png)
 
-## Prérequis
+# Prérequis
 
-## Installation
+# Installation
 
 À la racine du projet :
 
@@ -10,13 +10,13 @@
 docker-compose up -d
 ```
 
-## Cahier des charges
+# Cahier des charges
 
-### Analyse client
+## Analyse client
 
 MoneyValue est une jeune entreprise en développement, opérant dans la finance. Du fait de la constante evolution du milieu, la mise en place de systèmes internes et modulaires est devenue une norme pour les entreprises de la fintech, ce qui motive la création de ce projet: une plateforme fiable, interne et sécurisée sur la quelle pourront s'appuyer les différentes applications de l'entreprise.
 
-### Choix technologiques
+## Choix technologiques
 
 Pour le développement de ce projet, la décision a été prise de se baser sur les technologies [Vue.js](https://vuejs.org/) pour la partie client, et [Laravel](https://laravel.com/) pour la partie API.
 
@@ -44,12 +44,7 @@ Pour le développement de ce projet, la décision a été prise de se baser sur 
 
   - **_Documentation complète_** : Laravel dispose d'une documentation complète et détaillée, ce qui facilite l'apprentissage et la compréhension du framework. La documentation fournit des exemples pratiques, des guides et des explications claires sur les fonctionnalités du framework, ce qui est précieux pour développer rapidement et efficacement l'API.
 
-### Evaluation du temps de travail
-
-Faites un petit tableau avec comme entrée chaque grand poste de développement, et comme
-sortie le nombre de jour de travail (1 journée = 7 heures)
-
-### Liste fonctionnelle
+## Liste fonctionnelle & Evaluation du temps de travail
 
 | **Feature**                                        | **Temps estimé** | **statut** |
 | -------------------------------------------------- | ---------------- | ---------- |
@@ -62,21 +57,240 @@ sortie le nombre de jour de travail (1 journée = 7 heures)
 | Création du systeme d'authentification             | 1 / 2 journée    | 🔴         |
 | Création de l'interface d'administration           | 1 journée        | 🔴         |
 
-### Diagramme de la base de données
+## Diagramme de la base de données
 
 ![Data schema](./docs/media/data_schema.png)
 
-### Documentation de l’API
+## Documentation de l’API
 
-Rédigez de manière succincte :
+### 💱 Lire le statut de l'API
 
-1. les différentes URL de l’API REST (avec le verbe HTTP)
-2. Leur fonctionnalité
-3. Les données retournées
-4. Les message d’erreur possible
-   Adresse Github
-   L’adresse Github du projet (administration et API)
+```
+GET /status
+```
 
-### Wireframe de la partie front de l’administration
+- Reponse
+
+  - Status : 🟢 200 OK
+
+  - Body:
+
+    ```
+
+    ```
+
+- Erreurs
+
+### 💱 Créer une devise
+
+```
+POST /currency
+```
+
+- **Exemple de requête (body) :**
+
+```
+{}
+```
+
+- Reponse
+
+  - Status : 🟢 200 OK
+
+  - Body:
+
+    ```
+
+    ```
+
+- Erreurs
+
+### 💱 Créer une paire
+
+```
+POST /pair
+```
+
+- **Exemple de requête (body) :**
+
+```
+{}
+```
+
+- Reponse
+
+  - Status : 🟢 200 OK
+
+  - Body:
+
+    ```
+
+    ```
+
+- Erreurs
+
+### 💱 Créer une conversion
+
+```
+POST /conversion
+```
+
+- **Exemple de requête (body) :**
+
+```
+{}
+```
+
+- Reponse
+
+  - Status : 🟢 200 OK
+
+  - Body:
+
+    ```
+
+    ```
+
+- Erreurs
+
+### 💱 Lire une devise
+
+```
+GET /currency
+```
+
+- Reponse
+
+  - Status : 🟢 200 OK
+
+  - Body:
+
+    ```
+
+    ```
+
+- Erreurs
+
+### 💱 Lire une paire
+
+```
+GET /pair
+```
+
+- Reponse
+
+  - Status : 🟢 200 OK
+
+  - Body:
+
+    ```
+
+    ```
+
+- Erreurs
+
+### 💱 Lire une conversion
+
+```
+GET /conversion
+```
+
+- Reponse
+
+  - Status : 🟢 200 OK
+
+  - Body:
+
+    ```
+
+    ```
+
+- Erreurs
+
+### 💱 Mettre à jour une devise
+
+```
+PUT /currency
+```
+
+- **Exemple de requête (body) :**
+
+```
+{}
+```
+
+- Reponse
+
+  - Status : 🟢 200 OK
+
+  - Body:
+
+    ```
+
+    ```
+
+- Erreurs
+
+### 💱 Mettre à jour une paire
+
+```
+PUT /pair
+```
+
+- **Exemple de requête (body) :**
+
+```
+{}
+```
+
+- Reponse
+
+  - Status : 🟢 200 OK
+
+  - Body:
+
+    ```
+
+    ```
+
+- Erreurs
+
+### 💱 Supprimer une devise
+
+```
+DELETE /currency
+```
+
+- Reponse
+
+  - Status : 🟢 200 OK
+
+  - Body:
+
+    ```
+
+    ```
+
+- Erreurs
+
+### 💱 Supprimer une paire
+
+```
+DELETE /pair
+```
+
+- Reponse
+
+  - Status : 🟢 200 OK
+
+  - Body:
+
+    ```
+
+    ```
+
+- Erreurs
+
+## Wireframe de la partie front de l’administration
 
 Les images des wireframes de la partie administration

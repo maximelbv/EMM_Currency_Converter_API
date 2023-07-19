@@ -18,12 +18,15 @@
 
   ```
   cd admin
+  npm install
   npm run dev
   ```
 
-  (replace `dev` with `build` for production )
+  (remplacez `dev` par `build` pour la production )
 
-  ▶️ Lancement de l'interface d'administration sur le port 3000
+  📦 Installation des dépendances
+
+  ▶️ Lancement de l'interface d'administration sur le port 5173
 
 # Cahier des charges
 
@@ -63,7 +66,7 @@ Pour le développement de ce projet, la décision a été prise de se baser sur 
 
 | **Feature**                                        | **Temps estimé** | **statut** |
 | -------------------------------------------------- | ---------------- | ---------- |
-| Rédaction du cahier des charges                    | 1 / 2 journée    | 🟡         |
+| Rédaction du cahier des charges                    | 1 / 2 journée    | 🟢         |
 | Création du diagramme de base de données           | 1h               | 🟢         |
 | Création des maquettes                             | 1 / 2 journée    | 🔴         |
 | Mise en place du projet                            | 2h               | 🟢         |
@@ -71,6 +74,7 @@ Pour le développement de ce projet, la décision a été prise de se baser sur 
 | Création des routes API et MEP de la documentation | 1 journée        | 🔴         |
 | Création du systeme d'authentification             | 1 / 2 journée    | 🔴         |
 | Création de l'interface d'administration           | 1 journée        | 🔴         |
+| Relecture finale et MEP des livrables              | 1 / 2 journée    | 🔴         |
 
 ## Diagramme de la base de données
 

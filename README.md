@@ -1,14 +1,29 @@
 ![banner](./docs/media/banner.png)
 
-# Prérequis
-
 # Installation
 
-À la racine du projet :
+- **API**
 
-```
-docker-compose up -d
-```
+  À la **racine** du projet :
+
+  ```
+  docker-compose up -d
+  ```
+
+  ▶️ Lancement de l'API sur le port 8000
+
+  ▶️ Lancement d'une instance phpMyAdmin sur le port 8080
+
+- **Interface admin**
+
+  ```
+  cd admin
+  npm run dev
+  ```
+
+  (replace `dev` with `build` for production )
+
+  ▶️ Lancement de l'interface d'administration sur le port 3000
 
 # Cahier des charges
 

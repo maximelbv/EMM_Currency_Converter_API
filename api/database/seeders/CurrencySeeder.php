@@ -12,6 +12,8 @@ class CurrencySeeder extends Seeder
      */
     public function run(): void
     {
-      Currency::factory()->count(3)->create();
+      Currency::create(["name" =>"Euro" , "code" => "EUR"]);
+      Currency::create(["name" =>"Dollar" , "code" => "USD"]);
+      Currency::create(["name" =>"Bitcoin" , "code" => "BTC"]);
     }
 }

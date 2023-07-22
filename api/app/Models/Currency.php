@@ -10,7 +10,8 @@ class Currency extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name'
+        'name',
+        'code'
     ];
     public $timestamps = false;
 }

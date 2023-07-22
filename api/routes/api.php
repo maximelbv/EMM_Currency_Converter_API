@@ -1,7 +1,7 @@
 <?php
 
-use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CurrencyController;
+use App\Http\Controllers\ApiStateController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -20,8 +20,8 @@ Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
     return $request->user();
 });
 
-
+Route::get('/currencies', [CurrencyController::class, 'index']);
 Route::get('/pairs', [PairController::class, 'index']);
 Route::get('/count', [PairController::class, 'getCountByCurrenciesCode']);
 Route::get('/convertion', [PairController::class, 'getConvertedDataFromPair']);
-Route::get('/ping', [ApiStateController::class, 'serverStatus']);
+Route::get('/ping', [ApiStateController::class, 'state']);

@@ -4,10 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class ApiPublicStateController extends Controller
+class ApiStateController extends Controller
 {
     public function state()
     {
-        return response(["data" => "API Status : 🟢 OK"], 200);
+        return response()->json([
+            'status' => 200,
+            'message' => 'API Status : 🟢 OK'
+        ]);
     }
 }

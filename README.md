@@ -4,15 +4,12 @@
 
 - **API**
 
-  À la **racine** du projet :
-
   ```
-  docker-compose up -d
+  cd api
+  php artisan serve
   ```
 
   ▶️ Lancement de l'API sur le port 8000
-
-  ▶️ Lancement d'une instance phpMyAdmin sur le port 8080
 
 - **Interface admin**
 

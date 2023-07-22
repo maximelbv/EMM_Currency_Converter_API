@@ -16,10 +16,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('currencies', [CurrencyController::class, 'index'])->name("currencies");
-
-Route::post('login', [AuthController::class, 'authenticate'])->name('login');
-
-Route::prefix('dashboard')->middleware('auth:sanctum')->name('dashboard.')->group(function () {
-    Route::resource('currencies', CurrencyController::class)->except(['show', 'create', 'edit']);
+Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
+    return $request->user();
 });
+
+
+Route::get('/pairs', [PairController::class, 'index']);
+Route::get('/count', [PairController::class, 'getCountByCurrenciesCode']);
+Route::get('/convertion', [PairController::class, 'getConvertedDataFromPair']);
+Route::get('/ping', [ServerStatusController::class, 'serverStatus']);

@@ -24,9 +24,12 @@ Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
 });
 
 Route::get('/status', [ApiStateController::class, 'state']);
-Route::get('/currencies', [CurrencyController::class, 'show']);
+
+Route::get('/currencies', [CurrencyController::class, 'index']);
+Route::get('/currencies/{id}', [CurrencyController::class, 'show']);
 Route::post('/currencies', [CurrencyController::class, 'store']);
-Route::get('/pairs', [PairController::class, 'show']);
+
+Route::get('/pairs', [PairController::class, 'index']);
 Route::post('/pairs', [PairController::class, 'store']);
 Route::put('/pairs', [PairController::class, 'update']);
 Route::delete('/pairs', [PairController::class, 'destroy']);

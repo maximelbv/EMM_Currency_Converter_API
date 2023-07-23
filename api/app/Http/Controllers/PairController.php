@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Validator;
 class PairController extends Controller
 {
 
-    public function show()
+    public function index()
     {
         try {
             $pairs = Pair::with('from_currency_id', 'to_currency_id')->get();
@@ -31,29 +31,53 @@ class PairController extends Controller
         }
     }
 
+    public function show()
+    {
+        try {
+
+        } catch (\Throwable $th) {
+            return response()->json($th->getMessage(), $th->getCode());
+        }
+    }
+
     public function store(Request $request)
     {
-        $validate = Validator::make($request->all(), [
-            'from_currency_id' => 'required',
-            'to_currency_id' => 'required',
-            'conversion_rate' => 'required',
-        ]);
-        if($validate->fails()){
-            return response()->json(['message' => 'Validation failed', 'errors' => $validate->errors()], 422);
+        try {
+            $validate = Validator::make($request->all(), [
+                'from_currency_id' => 'required',
+                'to_currency_id' => 'required',
+                'conversion_rate' => 'required',
+            ]);
+            if($validate->fails()){
+                return response()->json(['message' => 'Validation failed', 'errors' => $validate->errors()], 422);
+            }
+            $pair = Pair::create($request->all());
+            return response()->json($pair);
+        } catch (\Throwable $th) {
+            return response()->json($th->getMessage(), $th->getCode());
         }
-        $pair = Pair::create($request->all());
-        return response()->json($pair);
+        
     }
 
     public function update(Request $request, $id)
     {
+        try {
+
+        } catch (\Throwable $th) {
+            return response()->json($th->getMessage(), $th->getCode());
+        }
     }
 
     public function destroy($id)
     {
-        $pairs = Pair::find($id);
-        $pairs->delete();
-        return response()->json(['message'=>'Succesfully deleted']);
+        try {
+            $pairs = Pair::find($id);
+            $pairs->delete();
+            return response()->json(['message'=>'Succesfully deleted']);
+        } catch (\Throwable $th) {
+            return response()->json($th->getMessage(), $th->getCode());
+        }
+
     }
 
 }

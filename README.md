@@ -102,20 +102,44 @@ GET /status
 
 ---
 
-### 💱 Lire une devise
+### 💱 Lister les devises
 
 ```
-GET /currency
+GET /currencies
 ```
 
-- Reponse
+- Exemple de reponse :
 
   - Status : 🟢 200 OK
 
   - Body:
 
     ```
-
+    {
+        "status": 200,
+        "currencies": [
+            {
+                "id": 1,
+                "name": "Euro",
+                "code": "EUR"
+            },
+            {
+                "id": 2,
+                "name": "Dollar",
+                "code": "USD"
+            },
+            {
+                "id": 3,
+                "name": "Bitcoin",
+                "code": "BTC"
+            },
+            {
+                "id": 4,
+                "name": "Etherum",
+                "code": "ETH"
+            }
+        ]
+    }
     ```
 
 ---
@@ -135,7 +159,7 @@ POST /currencies
 }
 ```
 
-- Reponse
+- Exemple de reponse :
 
   - Status : 🟢 200 OK
 
@@ -163,7 +187,7 @@ PUT /currency
 {}
 ```
 
-- Reponse
+- Exemple de reponse :
 
   - Status : 🟢 200 OK
 
@@ -181,7 +205,7 @@ PUT /currency
 DELETE /currency
 ```
 
-- Reponse
+- Exemple de reponse :
 
   - Status : 🟢 200 OK
 
@@ -199,7 +223,7 @@ DELETE /currency
 GET /pair
 ```
 
-- Reponse
+- Exemple de reponse :
 
   - Status : 🟢 200 OK
 
@@ -217,7 +241,7 @@ GET /pair
 GET /conversions
 ```
 
-- Reponse
+- Exemple de reponse :
 
   - Status : 🟢 200 OK
 
@@ -245,7 +269,7 @@ POST /pair
 }
 ```
 
-- Reponse
+- Exemple de reponse :
 
   - Status : 🟢 200 OK
 
@@ -276,7 +300,7 @@ PUT /pair
 {}
 ```
 
-- Reponse
+- Exemple de reponse :
 
   - Status : 🟢 200 OK
 
@@ -294,7 +318,7 @@ PUT /pair
 DELETE /pair
 ```
 
-- Reponse
+- Exemple de reponse :
 
   - Status : 🟢 200 OK
 

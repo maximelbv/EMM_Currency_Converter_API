@@ -8,9 +8,15 @@ class ApiStateController extends Controller
 {
     public function state()
     {
-        return response()->json([
-            'status' => 200,
-            'message' => 'API Status : 🟢 OK'
-        ]);
+        try {
+            return response()->json([
+                'status' => 200,
+                'message' => 'API Status : 🟢 OK'
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json($th->getMessage(), $th->getCode());
+        }
+        
+
     }
 }

@@ -2,97 +2,58 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Controller;
 use App\Models\Pair;
-use App\Http\Requests\StorePairsRequest;
-use App\Http\Requests\UpdatePairsRequest;
-use App\Models\Currency;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Validator;
 
 class PairController extends Controller
 {
-    public function index()
+
+    public function show()
     {
         try {
-            $pairs = Pair::with('currencyFrom', 'currencyTo')->get();
-
-            $pairs->transform(function ($pair) {
-                return [
-                    'from' => $pair->currencyFrom->code,
-                    'to' => $pair->currencyTo->code,
-                    'conversion_rate' => $pair->conversion_rate,
-                ];
-            });
-
-            return response()->json(['pairs' => $pairs], 200);
+            $pairs = Pair::with('from_currency_id', 'to_currency_id')->get();
+            if($pairs->count() > 0) {
+                        return response()->json([
+                'status' => 200,
+                'currencies' => $pairs
+            ]);
+            } else {
+                return response()->json([
+                    'status' => 404,
+                    'currencies' => 'No records found'
+                ]);
+            }
         } catch (\Throwable $th) {
             return response()->json($th->getMessage(), $th->getCode());
         }
     }
 
-    public function create()
-    {}
-
-    public function store(StorePairsRequest $request)
-    {}
-
-    public function show(Pair $Pair)
-    {}
-
-    public function edit(Pair $Pair)
-    {}
-
-    public function update(UpdatePairsRequest $request, Pair $Pair)
-    {}
-
-    public function destroy(Pair $Pair)
-    {}
-
-    public function getConvertedDataFromPair(Request $request)
+    public function store(Request $request)
     {
-        try {
-            $request->validate([
-                'from' => 'required|exists:currencies,code',
-                'to' => 'required|exists:currencies,code',
-                'amount' => 'required|numeric'
-            ]);
-            $fromCurrencyCode = $request->input('from');
-            $toCurrencyCode = $request->input('to');
-            $amoutToConvert = $request->input('amount');
-
-            $fromCurrency = Currency::where('code', $fromCurrencyCode)->firstOrFail();
-            $toCurrency = Currency::where('code', $toCurrencyCode)->firstOrFail();
-
-            $conversionRatefromPair = Pair::select(['conversion_rate', 'id'])->where('from_currency_id', $fromCurrency->id)->where('to_currency_id', $toCurrency->id)->firstOrFail();
-
-            $convertedValue =  $conversionRatefromPair->conversion_rate * $amoutToConvert;
-            $pair = Pair::where('id', $conversionRatefromPair->id)->firstOrFail();
-            $pair->count += 1;
-            $pair->update();
-
-            return response()->json([
-                ["converted_value" => $convertedValue], 200
-            ]);
-        } catch (\Throwable $th) {
-            return response()->json($th->getMessage(), $th->getCode());
+        $validate = Validator::make($request->all(), [
+            'from_currency_id' => 'required',
+            'to_currency_id' => 'required',
+            'conversion_rate' => 'required',
+        ]);
+        if($validate->fails()){
+            return response()->json(['message' => 'Validation failed', 'errors' => $validate->errors()], 422);
         }
+        $pair = Pair::create($request->all());
+        return response()->json($pair);
     }
 
-    public function getCountByCurrenciesCode(Request $request)
+    public function update(Request $request, $id)
     {
-        try {
-            $request->validate([
-                'from' => 'required|exists:currencies,code',
-                'to' => 'required|exists:currencies,code',
-            ]);
-            $fromCurrencyCode = $request->input('from');
-            $toCurrencyCode = $request->input('to');
-            $fromCurrency = Currency::where('code', $fromCurrencyCode)->firstOrFail();
-            $toCurrency = Currency::where('code', $toCurrencyCode)->firstOrFail();
-
-            $pairFounded = Pair::select(['count'])->where('from_currency_id', $fromCurrency->id)->where('to_currency_id', $toCurrency->id)->firstOrFail();
-            return response()->json(['count' => $pairFounded->count]);
-        } catch (\Throwable $th) {
-            return response()->json($th->getMessage(), $th->getCode());
-        }
     }
+
+    public function destroy($id)
+    {
+        $pairs = Pair::find($id);
+        $pairs->delete();
+        return response()->json(['message'=>'Succesfully deleted']);
+    }
+
 }

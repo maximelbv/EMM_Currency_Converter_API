@@ -79,6 +79,8 @@ Pour le développement de ce projet, la décision a été prise de se baser sur 
 
 ## Documentation de l’API
 
+---
+
 ### 💱 Lire le statut de l'API
 
 ```
@@ -92,82 +94,13 @@ GET /status
   - Body:
 
     ```
-
+    {
+      "status": 200,
+      "message": "API Status : 🟢 OK"
+    }
     ```
 
-- Erreurs
-
-### 💱 Créer une devise
-
-```
-POST /currency
-```
-
-- **Exemple de requête (body) :**
-
-```
-{}
-```
-
-- Reponse
-
-  - Status : 🟢 200 OK
-
-  - Body:
-
-    ```
-
-    ```
-
-- Erreurs
-
-### 💱 Créer une paire
-
-```
-POST /pair
-```
-
-- **Exemple de requête (body) :**
-
-```
-{}
-```
-
-- Reponse
-
-  - Status : 🟢 200 OK
-
-  - Body:
-
-    ```
-
-    ```
-
-- Erreurs
-
-### 💱 Créer une conversion
-
-```
-POST /conversion
-```
-
-- **Exemple de requête (body) :**
-
-```
-{}
-```
-
-- Reponse
-
-  - Status : 🟢 200 OK
-
-  - Body:
-
-    ```
-
-    ```
-
-- Erreurs
+---
 
 ### 💱 Lire une devise
 
@@ -185,30 +118,21 @@ GET /currency
 
     ```
 
-- Erreurs
+---
 
-### 💱 Lire une paire
-
-```
-GET /pair
-```
-
-- Reponse
-
-  - Status : 🟢 200 OK
-
-  - Body:
-
-    ```
-
-    ```
-
-- Erreurs
-
-### 💱 Lire une conversion
+### 💱 Créer une devise
 
 ```
-GET /conversion
+POST /currencies
+```
+
+- **Exemple de requête (body) :**
+
+```
+{
+  "name": "Etherum",
+  "code": "ETH"
+}
 ```
 
 - Reponse
@@ -218,10 +142,14 @@ GET /conversion
   - Body:
 
     ```
-
+    {
+      "name": "Etherum",
+      "code": "ETH",
+      "id": 4
+    }
     ```
 
-- Erreurs
+---
 
 ### 💱 Mettre à jour une devise
 
@@ -245,7 +173,78 @@ PUT /currency
 
     ```
 
-- Erreurs
+---
+
+### 💱 Supprimer une devise
+
+```
+DELETE /currency
+```
+
+- Reponse
+
+  - Status : 🟢 200 OK
+
+  - Body:
+
+    ```
+
+    ```
+
+---
+
+### 💱 Lire une paire
+
+```
+GET /pair
+```
+
+- Reponse
+
+  - Status : 🟢 200 OK
+
+  - Body:
+
+    ```
+
+    ```
+
+---
+
+### 💱 Créer une paire
+
+```
+POST /pair
+```
+
+- **Exemple de requête (body) :**
+
+```
+{
+  "from_currency_id": 1,
+  "to_currency_id": 3,
+  "conversion_rate": 1.4
+}
+```
+
+- Reponse
+
+  - Status : 🟢 200 OK
+
+  - Body:
+
+    ```
+    {
+      "from_currency_id": 1,
+      "to_currency_id": 3,
+      "conversion_rate": 1.4,
+      "updated_at": "2023-07-23T19:18:59.000000Z",
+      "created_at": "2023-07-23T19:18:59.000000Z",
+      "id": 2
+    }
+    ```
+
+---
 
 ### 💱 Mettre à jour une paire
 
@@ -269,25 +268,7 @@ PUT /pair
 
     ```
 
-- Erreurs
-
-### 💱 Supprimer une devise
-
-```
-DELETE /currency
-```
-
-- Reponse
-
-  - Status : 🟢 200 OK
-
-  - Body:
-
-    ```
-
-    ```
-
-- Erreurs
+---
 
 ### 💱 Supprimer une paire
 
@@ -305,7 +286,7 @@ DELETE /pair
 
     ```
 
-- Erreurs
+---
 
 ## Wireframe de la partie front de l’administration
 

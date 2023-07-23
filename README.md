@@ -211,6 +211,24 @@ GET /pair
 
 ---
 
+### 💱 Lire le nombre de conversions pour une paire
+
+```
+GET /conversions
+```
+
+- Reponse
+
+  - Status : 🟢 200 OK
+
+  - Body:
+
+    ```
+
+    ```
+
+---
+
 ### 💱 Créer une paire
 
 ```

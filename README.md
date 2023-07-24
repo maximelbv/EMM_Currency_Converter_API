@@ -4,12 +4,15 @@
 
 - **API**
 
-  ```
-  cd api
-  php artisan serve
-  ```
+Créer une base de données nommée 'currency_converter'
 
-  ▶️ Lancement de l'API sur le port 8000
+```
+cd api
+php artisan migrate:refresh --seed
+php artisan serve
+```
+
+▶️ Lancement de l'API sur le port 8000
 
 - **Interface admin**
 
@@ -65,13 +68,12 @@ Pour le développement de ce projet, la décision a été prise de se baser sur 
 | -------------------------------------------------- | ---------------- | ---------- |
 | Rédaction du cahier des charges                    | 1 / 2 journée    | 🟢         |
 | Création du diagramme de base de données           | 1h               | 🟢         |
-| Création des maquettes                             | 1 / 2 journée    | 🔴         |
 | Mise en place du projet                            | 2h               | 🟢         |
 | Création des migrations et seeders (API)           | 1 / 2 journée    | 🟢         |
 | Création des routes API et MEP de la documentation | 1 journée        | 🟢         |
 | Création du systeme d'authentification             | 1 / 2 journée    | 🔴         |
 | Création de l'interface d'administration           | 1 journée        | 🔴         |
-| Relecture finale et MEP des livrables              | 1 / 2 journée    | 🔴         |
+| Relecture finale et MEP des livrables              | 1 / 2 journée    | 🟢         |
 
 ## Diagramme de la base de données
 

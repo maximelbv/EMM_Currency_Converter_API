@@ -23,7 +23,7 @@ class CurrencyController extends Controller
             } else {
                 return response()->json([
                     'status' => 404,
-                    'currencies' => 'No currencies found'
+                    'message' => 'No currencies found'
                 ]);
             }
         } catch (\Throwable $th) {
@@ -65,7 +65,7 @@ class CurrencyController extends Controller
                 if (Currency::where(['code' => $request->get('code')])->exists()) {
                     return response()->json([
                         'status' => 409,
-                        'currency' => 'This currency already exists'
+                        'message' => 'This currency already exists'
                     ]);
                 } else {
                     $currency = Currency::create($request->all());
@@ -92,7 +92,7 @@ class CurrencyController extends Controller
                 if (Currency::where(['code' => $request->get('code')])->exists()) {
                     return response()->json([
                         'status' => 409,
-                        'currency' => 'This currency already exists'
+                        'message' => 'This currency already exists'
                     ]);
                 } else {
                     $currency->update($request->all());
@@ -101,7 +101,7 @@ class CurrencyController extends Controller
             } else {
                 return response()->json([
                     'status' => 409,
-                    'currency' => 'Currency not found'
+                    'message' => 'Currency not found'
                 ]);
             }
 
@@ -110,10 +110,24 @@ class CurrencyController extends Controller
         }
     }
 
-    public function destroy(Currency $currency)
+    public function destroy($id)
     {
         try {
+            $currency = Currency::find($id);
 
+            if($currency) {
+                $currency->delete();
+                return response()->json([
+                    'status' => 200,
+                    'message' => 'Successfully deleted',
+                    'entry deleted' => $currency
+                ]);
+            } else {
+                return response()->json([
+                    'status' => 409,
+                    'message' => 'Currency not found'
+                ]);
+            }
         } catch (\Throwable $th) {
             return response()->json($th->getMessage(), $th->getCode());
         }

@@ -142,7 +142,48 @@ GET /currencies
     }
     ```
 
+- Erreurs possibles :
+
+```
+  {
+    "status": 404,
+    "message": "No currencies found",
+  }
+```
+
 ---
+
+### 💱 Lire une devise
+
+```
+GET /currencies/{id}
+```
+
+- Exemple de reponse :
+
+  - Status : 🟢 200 OK
+
+  - Body:
+
+    ```
+    {
+      "status": 200,
+      "currency": {
+          "id": 6,
+          "name": "Etherum",
+          "code": "ETH"
+      }
+    }
+    ```
+
+- Erreurs possibles :
+
+```
+  {
+    "status": 404,
+    "message": "No currencies found",
+  }
+```
 
 ### 💱 Créer une devise
 
@@ -173,18 +214,41 @@ POST /currencies
     }
     ```
 
+- Erreurs possibles :
+
+  - Devise déjà existante
+
+    ```
+      {
+        "status": 409,
+        "message": "This currency already exists",
+      }
+    ```
+
+  - Erreur de validation des données
+
+    ```
+      {
+        "status": 422,
+        "message": "Validation failed",
+        "errors": 4
+      }
+    ```
+
 ---
 
 ### 💱 Mettre à jour une devise
 
 ```
-PUT /currency
+PUT /currencies
 ```
 
 - **Exemple de requête (body) :**
 
 ```
-{}
+{
+  "code": "QWE"
+}
 ```
 
 - Exemple de reponse :
@@ -194,7 +258,41 @@ PUT /currency
   - Body:
 
     ```
+    {
+      "name": "Etherum",
+      "code": "QWE",
+      "id": 4
+    }
+    ```
 
+- Erreurs possibles :
+
+  - Devise déjà existante
+
+    ```
+      {
+        "status": 409,
+        "message": "This currency already exists",
+      }
+    ```
+
+  - Devise non trouvée
+
+    ```
+      {
+        "status": 409,
+        "message": "Currency not found",
+      }
+    ```
+
+  - Erreur de validation des données
+
+    ```
+      {
+        "status": 422,
+        "message": "Validation failed",
+        "errors": 4
+      }
     ```
 
 ---
@@ -202,7 +300,7 @@ PUT /currency
 ### 💱 Supprimer une devise
 
 ```
-DELETE /currency
+DELETE /currencies/{id}
 ```
 
 - Exemple de reponse :
@@ -212,7 +310,15 @@ DELETE /currency
   - Body:
 
     ```
-
+    {
+        "status": 200,
+        "message": "Successfully deleted",
+        "entry deleted": {
+            "id": 6,
+            "name": "Etherum",
+            "code": "QWE"
+        }
+    }
     ```
 
 ---

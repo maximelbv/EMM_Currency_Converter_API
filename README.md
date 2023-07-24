@@ -67,8 +67,8 @@ Pour le développement de ce projet, la décision a été prise de se baser sur 
 | Création du diagramme de base de données           | 1h               | 🟢         |
 | Création des maquettes                             | 1 / 2 journée    | 🔴         |
 | Mise en place du projet                            | 2h               | 🟢         |
-| Création des migrations et seeders (API)           | 1 / 2 journée    | 🔴         |
-| Création des routes API et MEP de la documentation | 1 journée        | 🔴         |
+| Création des migrations et seeders (API)           | 1 / 2 journée    | 🟢         |
+| Création des routes API et MEP de la documentation | 1 journée        | 🟢         |
 | Création du systeme d'authentification             | 1 / 2 journée    | 🔴         |
 | Création de l'interface d'administration           | 1 journée        | 🔴         |
 | Relecture finale et MEP des livrables              | 1 / 2 journée    | 🔴         |
@@ -470,8 +470,14 @@ GET /pairs/count/from/{firstCurrencyId}/to/{secondCurrencyId}
 ### 💱 Effectuer une conversion
 
 ```
-POST /convert
+POST /convert/{amount}/from/{currencyFrom}/to/{currencyTo}
 ```
+
+- Exemple de requête :
+
+  ```
+  /convert/100/from/EUR/to/USD
+  ```
 
 - Exemple de reponse :
 
@@ -480,7 +486,10 @@ POST /convert
   - Body:
 
     ```
-
+    {
+        "status": 200,
+        "data": 140
+    }
     ```
 
 - Erreurs possibles :

@@ -86,63 +86,35 @@ class PairController extends Controller
         }
     }
 
-    // public function convert(Request $request)
-    // {
-    //     try {
-            
-    //         $validate = Validator::make($request->all(), [
-    //             'from' => 'required|alpha',
-    //             'to' => 'required|alpha',
-    //             'amount' => 'required|min:0',
-    //             'reverse'=>'required|boolean'
-    //         ]);
-    //         if($validate->fails()){
-    //             return response()->json(['message' => 'Validation failed', 'errors' => $validate->errors()], 422);
-    //         }
+    public function convert($amount, $currencyFrom, $currencyTo)
+    {
+        try {
+            $currencyIdFrom = Currency::where('code', $currencyFrom)->first()->id;
+            $currencyIdTo = Currency::where('code', $currencyTo)->first()->id;
 
-    //         $from=$request->query('from');
-    //         $to=$request->query('to');
+             $pair = Pair::where([
+                'from_currency_id' => $currencyIdFrom, 
+                'to_currency_id' => $currencyIdTo
+            ])->get('conversion_rate');
 
-    //         $currencyFrom = Currency::getByName($from)->first();
-    //         $currencyTo = Currency::getByName($to)->first();
-    //         $amount = $request->query('amount') ?? 1;
-    //         $reverse=$request->query('reverse');
-
-    //         if (!$currencyFrom || !$currencyTo) return response()->json(['error' => 'no existing currency'], 404);
-    //         if ($from == $to) return response()->json(['error' => 'You are trying to convert to the same currency'], 400);
-
-    //         $pairs = Pair::getPairsByCurrencies($currencyFrom, $currencyTo);
-    //         if ($pairs == null) return response()->json(['error' => 'Pairs not found'], 404);
+            if ($pair->count() > 0) {
+                return response()->json([
+                    'status' => 200,
+                    'data' => $amount * $pair[0]->conversion_rate
+                ]);
+            } else {
+                return response()->json([
+                    'status' => 404,
+                    'message' => 'No pairs found'
+                ]);
+            };
 
 
-    //         if($reverse == true) {
-    //             $converted = $amount * 1/$pairs->rate;
-    //             $data = [
-    //                 'amount' => $amount,
-    //                 'currencyFrom' => $request->query('to'),
-    //                 'currencyTo' => $request->query('from'),
-    //                 'amountConverted' => $converted,
+        } catch (\Throwable $th) {
+            return response()->json($th->getMessage(), $th->getCode());
+        }
 
-    //             ];
-    //         }else {
-    //             $converted = $amount * $pairs->rate;
-
-    //             $data = [
-    //                 'amount' => $amount,
-    //                 'currencyFrom' => $request->query('from'),
-    //                 'currencyTo' => $request->query('to'),
-    //                 'amountConverted' => $converted,
-
-    //             ];
-    //         }
-
-    //         return response()->json(['message' => 'Convert success', $data],200);
-
-    //     } catch (\Throwable $th) {
-    //         return response()->json($th->getMessage(), $th->getCode());
-    //     }
-
-    // }
+    }
 
     public function store(Request $request)
     {

@@ -19,12 +19,12 @@ class PairController extends Controller
             if($pairs->count() > 0) {
                         return response()->json([
                 'status' => 200,
-                'currencies' => $pairs
+                'pairs' => $pairs
             ]);
             } else {
                 return response()->json([
                     'status' => 404,
-                    'currencies' => 'No records found'
+                    'message' => 'No pairs found'
                 ]);
             }
         } catch (\Throwable $th) {
@@ -38,29 +38,49 @@ class PairController extends Controller
             $currencyIdFrom = Currency::where('code', $currencyOne)->first()->id;
             $currencyIdTo = Currency::where('code', $currencyTwo)->first()->id;
 
-            if ($currencyIdFrom->exists() && $currencyIdTo->exists()) {
-                $pair = Pair::where([
-                    'from_currency_id' => $currencyIdFrom, 
-                    'to_currency_id' => $currencyIdTo
-                    ])->get();
-                if($pair->count() > 0) {
-                    return response()->json([
-                        'status' => 200,
-                        'pair' => $pair
-                    ]);
-                } else {
-                    return response()->json([
-                        'status' => 404,
-                        'currencies' => 'No records found'
-                    ]);
-                }
+            $pair = Pair::where([
+                'from_currency_id' => $currencyIdFrom, 
+                'to_currency_id' => $currencyIdTo
+            ])->get();
+
+            if($pair->count() > 0) {
+                return response()->json([
+                    'status' => 200,
+                    'pair' => $pair
+                ]);
             } else {
                 return response()->json([
-                    'status' => 401,
-                    'currencies' => 'Invalid credentials (try to request valid currencies)'
+                    'status' => 404,
+                    'message' => 'No pairs found'
                 ]);
-            }
-            
+            };
+        } catch (\Throwable $th) {
+            return response()->json($th->getMessage(), $th->getCode());
+        }
+    }
+
+    public function getCount($currencyOne, $currencyTwo)
+    {
+        try {
+            $currencyIdFrom = Currency::where('code', $currencyOne)->first()->id;
+            $currencyIdTo = Currency::where('code', $currencyTwo)->first()->id;
+
+            $pair = Pair::where([
+                'from_currency_id' => $currencyIdFrom, 
+                'to_currency_id' => $currencyIdTo
+            ])->get('count');
+
+            if($pair->count() > 0) {
+                return response()->json([
+                    'status' => 200,
+                    'data' => $pair[0]
+                ]);
+            } else {
+                return response()->json([
+                    'status' => 404,
+                    'message' => 'No pairs found'
+                ]);
+            };
         } catch (\Throwable $th) {
             return response()->json($th->getMessage(), $th->getCode());
         }
@@ -141,7 +161,7 @@ class PairController extends Controller
                 ])->exists()) {
                     return response()->json([
                         'status' => 409,
-                        'pair' => 'This pair already exists'
+                        'message' => 'This pair already exists'
                     ]);
                 } else {
                     $pair = Pair::create($request->all());
@@ -154,9 +174,22 @@ class PairController extends Controller
         
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, int $id)
     {
         try {
+            $pair = Pair::find($id);
+            if ($pair) {             
+                $pair->update($request->all());
+                return response()->json([
+                    'status' => 200,
+                    'pair modified' => $pair
+                ]);
+            } else {
+                return response()->json([
+                    'status' => 404,
+                    'message' => 'Pair not found'
+                ]);
+            }
 
         } catch (\Throwable $th) {
             return response()->json($th->getMessage(), $th->getCode());
@@ -166,9 +199,21 @@ class PairController extends Controller
     public function destroy($id)
     {
         try {
-            $pairs = Pair::find($id);
-            $pairs->delete();
-            return response()->json(['message'=>'Succesfully deleted']);
+            $pair = Pair::find($id);
+
+            if($pair) {
+                $pair->delete();
+                return response()->json([
+                    'status' => 200,
+                    'message' => 'Successfully deleted',
+                    'entry deleted' => $pair
+                ]);
+            } else {
+                return response()->json([
+                    'status' => 409,
+                    'message' => 'Pair not found'
+                ]);
+            }
         } catch (\Throwable $th) {
             return response()->json($th->getMessage(), $th->getCode());
         }

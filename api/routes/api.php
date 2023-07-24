@@ -33,11 +33,12 @@ Route::delete('/currencies/{id}', [CurrencyController::class, 'destroy']);
 
 Route::get('/pairs', [PairController::class, 'index']);
 Route::get('/pairs/from/{currencyOne}/to/{currencyTwo}', [PairController::class, 'show']);
+Route::get('/pairs/count/from/{currencyOne}/to/{currencyTwo}', [PairController::class, 'getCount']);
+Route::post('/pairs', [PairController::class, 'store']);
 // TODO: Controller
 // Route::post('/pairs/convert', [PairController::class, 'convert']);
-Route::post('/pairs', [PairController::class, 'store']);
-Route::put('/pairs', [PairController::class, 'update']);
-Route::delete('/pairs', [PairController::class, 'destroy']);
+Route::put('/pairs/{id}', [PairController::class, 'update']);
+Route::delete('/pairs/{id}', [PairController::class, 'destroy']);
 
 Route::get('/count', [PairController::class, 'getCountByCurrenciesCode']);
 Route::get('/convertion', [PairController::class, 'getConvertedDataFromPair']);

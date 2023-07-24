@@ -89,15 +89,8 @@ class CurrencyController extends Controller
             }
             $currency = Currency::find($id);
             if ($currency) {
-                if (Currency::where(['code' => $request->get('code')])->exists()) {
-                    return response()->json([
-                        'status' => 409,
-                        'message' => 'This currency already exists'
-                    ]);
-                } else {
-                    $currency->update($request->all());
-                    return response()->json($currency);
-                }
+                $currency->update($request->all());
+                return response()->json($currency);
             } else {
                 return response()->json([
                     'status' => 409,

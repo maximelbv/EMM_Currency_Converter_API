@@ -144,12 +144,14 @@ GET /currencies
 
 - Erreurs possibles :
 
-```
-  {
-    "status": 404,
-    "message": "No currencies found",
-  }
-```
+  - Pas de devises trouvées
+
+    ```
+    {
+      "status": 404,
+      "message": "No currencies found",
+    }
+    ```
 
 ---
 
@@ -178,12 +180,16 @@ GET /currencies/{id}
 
 - Erreurs possibles :
 
-```
-  {
-    "status": 404,
-    "message": "No currencies found",
-  }
-```
+  - Pas de devises trouvées
+
+    ```
+      {
+        "status": 404,
+        "message": "No currencies found",
+      }
+    ```
+
+---
 
 ### 💱 Créer une devise
 
@@ -231,7 +237,7 @@ POST /currencies
       {
         "status": 422,
         "message": "Validation failed",
-        "errors": 4
+        "errors": {}
       }
     ```
 
@@ -240,7 +246,7 @@ POST /currencies
 ### 💱 Mettre à jour une devise
 
 ```
-PUT /currencies
+PUT /currencies/{id}
 ```
 
 - **Exemple de requête (body) :**
@@ -321,12 +327,23 @@ DELETE /currencies/{id}
     }
     ```
 
+- Erreurs possibles :
+
+  - Devise non trouvée
+
+    ```
+      {
+        "status": 409,
+        "message": "Currency not found",
+      }
+    ```
+
 ---
 
-### 💱 Lire une paire
+### 💱 Lister les paires
 
 ```
-GET /pair
+GET /pairs
 ```
 
 - Exemple de reponse :
@@ -336,7 +353,82 @@ GET /pair
   - Body:
 
     ```
+    {
+        "status": 200,
+        "pairs": [
+            {
+                "id": 1,
+                "from_currency_id": 1,
+                "to_currency_id": 2,
+                "conversion_rate": "1.4000",
+                "count": 0,
+                "created_at": "2023-07-23T19:17:41.000000Z",
+                "updated_at": "2023-07-23T19:17:41.000000Z"
+            },
+            {
+                "id": 2,
+                "from_currency_id": 1,
+                "to_currency_id": 3,
+                "conversion_rate": "1.2000",
+                "count": 0,
+                "created_at": "2023-07-23T19:18:59.000000Z",
+                "updated_at": "2023-07-23T19:18:59.000000Z"
+            },
+        ]
+    }
+    ```
 
+- Erreurs possibles :
+
+  - Pas de paires trouvées
+
+    ```
+    {
+      "status": 404,
+      "message": "No pairs found",
+    }
+    ```
+
+---
+
+### 💱 Lire une paire
+
+```
+GET /pairs/from/{firstCurrencyId}/to/{secondCurrencyId}
+```
+
+- Exemple de reponse :
+
+  - Status : 🟢 200 OK
+
+  - Body:
+
+    ```
+    {
+        "status": 200,
+        "pair": [
+            {
+                "id": 5,
+                "from_currency_id": 1,
+                "to_currency_id": 5,
+                "conversion_rate": "2.7000",
+                "count": 0,
+                "created_at": "2023-07-23T20:40:53.000000Z",
+                "updated_at": "2023-07-23T20:40:53.000000Z"
+            }
+        ]
+    }
+    ```
+
+- Erreurs possibles :
+
+  - Pas de paires trouvées
+
+    ```
+    {
+      "status": 404,
+      "message": "No pairs found",
+    }
     ```
 
 ---
@@ -344,7 +436,41 @@ GET /pair
 ### 💱 Lire le nombre de conversions pour une paire
 
 ```
-GET /conversions
+GET /pairs/count/from/{firstCurrencyId}/to/{secondCurrencyId}
+```
+
+- Exemple de reponse :
+
+  - Status : 🟢 200 OK
+
+  - Body:
+
+    ```
+    {
+        "status": 200,
+        "data": {
+            "count": 0
+        }
+    }
+    ```
+
+- Erreurs possibles :
+
+  - Pas de paires trouvées
+
+  ```
+  {
+    "status": 404,
+    "message": "No pairs found"
+  }
+  ```
+
+---
+
+### 💱 Effectuer une conversion
+
+```
+POST /convert
 ```
 
 - Exemple de reponse :
@@ -357,12 +483,14 @@ GET /conversions
 
     ```
 
+- Erreurs possibles :
+
 ---
 
 ### 💱 Créer une paire
 
 ```
-POST /pair
+POST /pairs
 ```
 
 - **Exemple de requête (body) :**
@@ -392,18 +520,39 @@ POST /pair
     }
     ```
 
+- Erreurs possibles
+
+  - Paire existante
+    ```
+    {
+      "status": 409,
+      "message": "This pair already exists"
+    }
+    ```
+  - Erreur de validation des données
+
+    ```
+      {
+        "status": 422,
+        "message": "Validation failed",
+        "errors": {}
+      }
+    ```
+
 ---
 
 ### 💱 Mettre à jour une paire
 
 ```
-PUT /pair
+PUT /pairs/{id}
 ```
 
 - **Exemple de requête (body) :**
 
 ```
-{}
+{
+  "conversion_rate": "1.6000"
+}
 ```
 
 - Exemple de reponse :
@@ -413,7 +562,29 @@ PUT /pair
   - Body:
 
     ```
+    {
+        "status": 200,
+        "pair modified": {
+            "id": 7,
+            "from_currency_id": 1,
+            "to_currency_id": 3,
+            "conversion_rate": 1.6000,
+            "count": 0,
+            "created_at": "2023-07-24T16:12:08.000000Z",
+            "updated_at": "2023-07-24T16:12:47.000000Z"
+        }
+    }
+    ```
 
+- Erreurs possibles
+
+  - Paire non trouvée
+
+    ```
+    {
+        "status": 404,
+        "message": "Pair not found"
+    }
     ```
 
 ---
@@ -421,7 +592,7 @@ PUT /pair
 ### 💱 Supprimer une paire
 
 ```
-DELETE /pair
+DELETE /pairs/{id}
 ```
 
 - Exemple de reponse :
@@ -431,7 +602,30 @@ DELETE /pair
   - Body:
 
     ```
+    {
+      "status": 200,
+      "message": "Successfully deleted",
+      "entry deleted": {
+          "id": 7,
+          "from_currency_id": 1,
+          "to_currency_id": 3,
+          "conversion_rate": "1.6000",
+          "count": 0,
+          "created_at": "2023-07-24T16:12:08.000000Z",
+          "updated_at": "2023-07-24T16:12:47.000000Z"
+      }
+    }
+    ```
 
+- Erreurs possibles
+
+  - Paire non trouvée
+
+    ```
+    {
+        "status": 404,
+        "message": "Pair not found"
+    }
     ```
 
 ---

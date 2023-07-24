@@ -28,8 +28,12 @@ Route::get('/status', [ApiStateController::class, 'state']);
 Route::get('/currencies', [CurrencyController::class, 'index']);
 Route::get('/currencies/{id}', [CurrencyController::class, 'show']);
 Route::post('/currencies', [CurrencyController::class, 'store']);
+Route::put('/currencies/{id}', [CurrencyController::class, 'update']);
 
 Route::get('/pairs', [PairController::class, 'index']);
+Route::get('/pairs/from/{currencyOne}/to/{currencyTwo}', [PairController::class, 'show']);
+// TODO: Controller
+// Route::post('/pairs/convert', [PairController::class, 'convert']);
 Route::post('/pairs', [PairController::class, 'store']);
 Route::put('/pairs', [PairController::class, 'update']);
 Route::delete('/pairs', [PairController::class, 'destroy']);

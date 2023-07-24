@@ -62,8 +62,15 @@ class CurrencyController extends Controller
             if($validate->fails()){
                 return response()->json(['message' => 'Validation failed', 'errors' => $validate->errors()], 422);
             } else {
-                $currency = Currency::create($request->all());
-                return response()->json($currency);
+                if (Currency::where(['code' => $request->get('code')])->exists()) {
+                    return response()->json([
+                        'status' => 409,
+                        'currency' => 'This currency already exists'
+                    ]);
+                } else {
+                    $currency = Currency::create($request->all());
+                    return response()->json($currency);
+                }
             }
         } catch (\Throwable $th) {
             return response()->json($th->getMessage(), $th->getCode());
@@ -71,9 +78,32 @@ class CurrencyController extends Controller
        
     }
 
-    public function update(Currency $currency)
+    public function update(Request $request, int $id)
     {
         try {
+            $validate = Validator::make($request->all(), [
+                'code' => 'max:3',
+            ]);
+            if($validate->fails()){
+                return response()->json(['message' => 'Validation failed', 'errors' => $validate->errors()], 422);
+            }
+            $currency = Currency::find($id);
+            if ($currency) {
+                if (Currency::where(['code' => $request->get('code')])->exists()) {
+                    return response()->json([
+                        'status' => 409,
+                        'currency' => 'This currency already exists'
+                    ]);
+                } else {
+                    $currency->update($request->all());
+                    return response()->json($currency);
+                }
+            } else {
+                return response()->json([
+                    'status' => 409,
+                    'currency' => 'Currency not found'
+                ]);
+            }
 
         } catch (\Throwable $th) {
             return response()->json($th->getMessage(), $th->getCode());
